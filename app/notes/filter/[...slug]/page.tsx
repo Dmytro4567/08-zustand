@@ -4,8 +4,9 @@ import {Metadata} from "next";
 
 type FilterPageParams = { slug?: string[] };
 
-export async function generateMetadata({params}: { params: FilterPageParams }): Promise<Metadata> {
-    const tag = params.slug?.[0] || 'All';
+export async function generateMetadata({params}: { params: Promise<FilterPageParams> }): Promise<Metadata> {
+    const {slug} = await params;
+    const tag = slug?.[0] || 'All';
     const capitalizedTag = tag.charAt(0).toUpperCase() + tag.slice(1);
 
     const title = `NoteHub – Фільтр: ${capitalizedTag}`;
