@@ -15,9 +15,22 @@ const geistMono = Geist_Mono({
     subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-    title: "Note Hub",
-    description: "Note Hub",
+export const metadata = {
+    title: 'NoteHub – Зручний менеджер нотаток',
+    description: 'NoteHub – це застосунок для створення, збереження та фільтрації нотаток із підтримкою тегів, пошуку та модалок.',
+    openGraph: {
+        title: 'NoteHub – Зручний менеджер нотаток',
+        description: 'Створюйте, шукайте та переглядайте нотатки за допомогою зручного інтерфейсу NoteHub.',
+        url: 'https://https://08-zustand-ten.vercel.app/',
+        images: [
+            {
+                url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
+                width: 1200,
+                height: 630,
+                alt: 'NoteHub',
+            },
+        ],
+    },
 };
 
 export default function RootLayout({
