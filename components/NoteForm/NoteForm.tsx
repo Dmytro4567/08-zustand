@@ -1,89 +1,103 @@
-import {Formik, Form, Field, ErrorMessage} from 'formik';
-import * as Yup from 'yup';
+'use client';
+
+import {useState} from 'react';
 import css from './NoteForm.module.css';
-import type {CreateNote, Note} from '@/types/note';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {createNote} from '@/lib/api';
+import type {CreateNote} from '@/types/note';
+import {useRouter} from 'next/navigation';
 
-const validationSchema = Yup.object({
-    title: Yup.string().min(3).max(50).required(),
-    content: Yup.string().max(500),
-    tag: Yup.mixed<Note['tag']>().oneOf([
-        'Todo',
-        'Work',
-        'Personal',
-        'Meeting',
-        'Shopping',
-    ]).required(),
-});
-
-interface NoteFormProps {
-    onClose: () => void;
-}
-
-export default function NoteForm({onClose}: NoteFormProps) {
+export default function NoteForm() {
     const queryClient = useQueryClient();
+    const router = useRouter();
+
+    const [formData, setFormData] = useState<CreateNote>({
+        title: '',
+        content: '',
+        tag: 'Todo',
+    });
 
     const {mutateAsync, isPending} = useMutation({
-        mutationFn: (note: CreateNote) => createNote(note),
-        onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['notes']});
-            onClose();
+        mutationFn: async (note: CreateNote) => {
+            const newNote = await createNote(note);
+            return newNote;
+        },
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: ['notes']});
+            router.push('/notes/filter/All');
         },
     });
 
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        await mutateAsync(formData);
+    };
+
     return (
-        <Formik<CreateNote>
-            initialValues={{title: '', content: '', tag: 'Todo'}}
-            validationSchema={validationSchema}
-            onSubmit={async (values) => {
-                await mutateAsync(values);
-            }}
-        >
-            <Form className={css.form}>
-                <div className={css.formGroup}>
-                    <label htmlFor="title">Title</label>
-                    <Field id="title" name="title" className={css.input}/>
-                    <ErrorMessage name="title" component="span" className={css.error}/>
-                </div>
+        <form className={css.form} onSubmit={handleSubmit}>
+            <div className={css.formGroup}>
+                <label htmlFor="title">Title</label>
+                <input
+                    id="title"
+                    name="title"
+                    type="text"
+                    required
+                    minLength={3}
+                    maxLength={50}
+                    className={css.input}
+                    value={formData.title}
+                    onChange={(e) =>
+                        setFormData({...formData, title: e.target.value})
+                    }
+                />
+            </div>
 
-                <div className={css.formGroup}>
-                    <label htmlFor="content">Content</label>
-                    <Field
-                        id="content"
-                        name="content"
-                        as="textarea"
-                        rows={8}
-                        className={css.textarea}
-                    />
-                    <ErrorMessage name="content" component="span" className={css.error}/>
-                </div>
+            <div className={css.formGroup}>
+                <label htmlFor="content">Content</label>
+                <textarea
+                    id="content"
+                    name="content"
+                    rows={8}
+                    maxLength={500}
+                    className={css.textarea}
+                    value={formData.content}
+                    onChange={(e) =>
+                        setFormData({...formData, content: e.target.value})
+                    }
+                />
+            </div>
 
-                <div className={css.formGroup}>
-                    <label htmlFor="tag">Tag</label>
-                    <Field as="select" id="tag" name="tag" className={css.select}>
-                        <option value="Todo">Todo</option>
-                        <option value="Work">Work</option>
-                        <option value="Personal">Personal</option>
-                        <option value="Meeting">Meeting</option>
-                        <option value="Shopping">Shopping</option>
-                    </Field>
-                    <ErrorMessage name="tag" component="span" className={css.error}/>
-                </div>
+            <div className={css.formGroup}>
+                <label htmlFor="tag">Tag</label>
+                <select
+                    id="tag"
+                    name="tag"
+                    className={css.select}
+                    value={formData.tag}
+                    onChange={(e) =>
+                        setFormData({
+                            ...formData,
+                            tag: e.target.value as CreateNote['tag'],
+                        })
+                    }
+                >
+                    <option value="Todo">Todo</option>
+                    <option value="Work">Work</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Meeting">Meeting</option>
+                    <option value="Shopping">Shopping</option>
+                </select>
+            </div>
 
-                <div className={css.actions}>
-                    <button type="button" className={css.cancelButton} onClick={onClose}>
-                        Cancel
-                    </button>
-                    <button
-                        type="submit"
-                        className={css.submitButton}
-                        disabled={isPending}
-                    >
-                        {isPending ? 'Creating...' : 'Create note'}
-                    </button>
-                </div>
-            </Form>
-        </Formik>
+            <div className={css.actions}>
+                <button
+                    type="submit"
+                    className={css.submitButton}
+                    disabled={isPending}
+                >
+                    {isPending ? 'Creating...' : 'Create note'}
+                </button>
+            </div>
+        </form>
     );
 }
