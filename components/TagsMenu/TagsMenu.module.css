@@ -8,9 +8,9 @@
     color: #333;
     border: 1px solid #ccc;
     padding: 8px 16px;
-    font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
+    font: inherit;
     transition: background-color 0.3s ease, box-shadow 0.2s ease;
 }
 
@@ -47,7 +47,7 @@
     transition: background-color 0.2s ease;
 }
 
-.menuLink:hover {
+.menuList .menuLink:hover {
     background-color: #f0f0f0;
     color: #333;
 }
