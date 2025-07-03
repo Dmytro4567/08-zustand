@@ -1,11 +1,11 @@
 import css from './not-found.module.css';
 
 export const metadata = {
-    title: 'Сторінку не знайдено – NoteHub',
-    description: 'На жаль, сторінку не знайдено. Перевірте URL або поверніться на головну сторінку NoteHub.',
+    title: 'NoteHub – Page Not Found',
+    description: 'Unfortunately, the page was not found. Please check the URL or return to the NoteHub homepage.',
     openGraph: {
-        title: 'Сторінку не знайдено – NoteHub',
-        description: 'Цієї сторінки не існує. Спробуйте інший шлях або перейдіть на головну.',
+        title: 'Page Not Found – NoteHub',
+        description: 'This page does not exist. Try a different path or go to the homepage.',
         url: 'https://08-zustand-ten.vercel.app/not-found',
         images: [
             {
@@ -17,6 +17,7 @@ export const metadata = {
         ],
     },
 };
+
 
 export default function NotFound() {
     return (

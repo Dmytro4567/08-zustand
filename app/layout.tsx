@@ -12,11 +12,11 @@ const roboto = Roboto({
 });
 
 export const metadata = {
-    title: 'NoteHub – Зручний менеджер нотаток',
-    description: 'NoteHub – це застосунок для створення, збереження та фільтрації нотаток із підтримкою тегів, пошуку та модалок.',
+    title: 'NoteHub – Convenient note manager',
+    description: 'NoteHub is an app for creating, saving, and filtering notes with support for tags, search, and modals.',
     openGraph: {
-        title: 'NoteHub – Зручний менеджер нотаток',
-        description: 'Створюйте, шукайте та переглядайте нотатки за допомогою зручного інтерфейсу NoteHub.',
+        title: 'NoteHub – Convenient note manager',
+        description: 'Create, search, and view notes using the convenient NoteHub interface.',
         url: 'https://08-zustand-ten.vercel.app/',
         images: [
             {
@@ -28,7 +28,6 @@ export const metadata = {
         ],
     },
 };
-
 export default function RootLayout({
                                        children,
                                        modal,

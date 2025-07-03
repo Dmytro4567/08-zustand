@@ -9,8 +9,8 @@ export async function generateMetadata({params}: { params: Promise<FilterPagePar
     const tag = slug?.[0] || 'All';
     const capitalizedTag = tag.charAt(0).toUpperCase() + tag.slice(1);
 
-    const title = `NoteHub – Фільтр: ${capitalizedTag}`;
-    const description = `Перегляд нотаток у категорії "${capitalizedTag}".`;
+    const title = `NoteHub – Filter: ${capitalizedTag}`;
+    const description = `Viewing notes in the "${capitalizedTag}".`;
 
     return {
         title,
