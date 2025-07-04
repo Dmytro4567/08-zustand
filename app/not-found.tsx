@@ -1,6 +1,7 @@
 import css from './not-found.module.css';
+import type {Metadata} from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
     title: 'NoteHub – Page Not Found',
     description: 'Unfortunately, the page was not found. Please check the URL or return to the NoteHub homepage.',
     openGraph: {

@@ -25,7 +25,7 @@ export const useNoteStore = create<NoteStore>()(
             clearDraft: () => set({draft: initialDraft}),
         }),
         {
-            name: 'note-draft', // имя ключа в localStorage
+            name: 'note-draft',
         }
     )
 );

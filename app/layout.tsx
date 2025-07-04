@@ -3,6 +3,7 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import {Roboto} from 'next/font/google';
+import type {Metadata} from 'next';
 
 const roboto = Roboto({
     weight: ['400', '700'],
@@ -11,7 +12,7 @@ const roboto = Roboto({
     variable: '--font-roboto',
 });
 
-export const metadata = {
+export const metadata: Metadata = {
     title: 'NoteHub – Convenient note manager',
     description: 'NoteHub is an app for creating, saving, and filtering notes with support for tags, search, and modals.',
     openGraph: {
